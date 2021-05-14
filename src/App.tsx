@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import logo from "./logo.svg";
-import "./App.css";
+import "./style/App.css";
 import * as d3 from "d3";
 import { D3ZoomEvent } from "d3";
 
