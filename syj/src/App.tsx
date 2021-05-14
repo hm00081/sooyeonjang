@@ -15,8 +15,8 @@ interface NodeCycle {
   nodeIndex: number;
 }
 
-const syj: Syj = require("./0508.json");
-const cc: number[][] = require("./double_array.json"); //2차원배열
+const syj: Syj = require("./data/0508.json");
+const cc: number[][] = require("./data/double_array.json"); //2차원배열
 
 function App() {
 
