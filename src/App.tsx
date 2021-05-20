@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import logo from "./logo.svg";
 import "./style/App.css";
 import * as d3 from "d3";
+import { Button, DatePicker, version} from "antd";
 import { D3ZoomEvent } from "d3";
 
 interface Syj {
@@ -339,14 +340,14 @@ function App() {
             // const cycle7Color = "#ff3d03";
             // const cycle8Color = "#ff0000";
             //b,y,r v2
-            const cycle1Color = "#7dbbff";
-            const cycle2Color = "#adc5a7";
-            const cycle3Color = "#c4ca7a";
-            const cycle4Color = "#dccf4e";
-            const cycle5Color = "#f3d422";
-            const cycle6Color = "#ff9c09";
-            const cycle7Color = "#ff4e04";
-            const cycle8Color = "#ff0000";
+            const cycle1Color = "#dc452a";
+            const cycle2Color = "#e79324";
+            const cycle3Color = "#efc62a";
+            const cycle4Color = "#8dc63f";
+            const cycle5Color = "#01aa83";
+            const cycle6Color = "#00b1f0";
+            const cycle7Color = "#056baf";
+            const cycle8Color = "#56346e";
             //yellow
             // const cycle1Color = "#ffff00";
             // const cycle2Color = "#d9e13c";
