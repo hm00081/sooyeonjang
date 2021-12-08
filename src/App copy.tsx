@@ -1,12 +1,13 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import logo from './logo.svg';
-import './App.css';
+import './style/App.css';
 import * as d3 from 'd3';
+import { Button, DatePicker, version } from 'antd';
 import { D3ZoomEvent } from 'd3';
 
 interface Syj {
-    nodes: { name: number; group: number }[];
-    links: { source: string; target: string; value: number }[];
+    nodes: { name: number; group: number }[]; //array
+    links: { source: string; target: string; value: number }[]; //array
 }
 interface NodeCycle {
     x: number;
@@ -15,22 +16,22 @@ interface NodeCycle {
     nodeIndex: number;
 }
 
-const syj: Syj = require('./0508.json');
-const cc: number[][] = require('./double_array.json'); //2차원배열
+const syj: Syj = require('./data/0508.json');
+const cc: number[][] = require('./data/double_array.json'); //2차원배열
 
 function App() {
     /*
-  함수를 크게 5가지를 만들면 좋을 것 같습니다.
-  1. initialize: 데이터와 관련 없이 초기에 한 번 설정하면 되는 변수들을 초기화. ex> margin, width, height,
-  2. remove: 경우에 따라 없어도 될 것 같습니다.
-  3. updateData: 데이터를 업데이트 합니다. const x와 x2 등을 보니, syj2 등의 데이터에 영향을 받는 상황입니다.
-  따라서, 1) 현재 선택된 오더 순서 (ex> order by Time, ...) 대로 syj 데이터를 만들고,
-  2) 만들어진 syj를 바탕으로 nodes나 links, matrix 등의 값을 만듭니다.
-  - const orders는, 데이터 값과 관련 없는 정렬에 대한 함수인 것 같은데, 맞다면 밖으로 아예 빼서 함수로 만들면 좋을 것 같습니다.
-  4. initDraw
-  - const svg 와 같이 정렬 순서 등과 관련 없이 한 번만 부르면 되는 함수를 초기화하는 함수입니다.
-  5. updateDraw
-   */
+   함수를 크게 5가지를 만들면 좋을 것 같습니다.
+   1. initialize: 데이터와 관련 없이 초기에 한 번 설정하면 되는 변수들을 초기화. ex> margin, width, height,
+   2. remove: 경우에 따라 없어도 될 것 같습니다.
+   3. updateData: 데이터를 업데이트 합니다. const x와 x2 등을 보니, syj2 등의 데이터에 영향을 받는 상황입니다.
+   따라서, 1) 현재 선택된 오더 순서 (ex> order by Time, ...) 대로 syj 데이터를 만들고,
+   2) 만들어진 syj를 바탕으로 nodes나 links, matrix 등의 값을 만듭니다.
+   - const orders는, 데이터 값과 관련 없는 정렬에 대한 함수인 것 같은데, 맞다면 밖으로 아예 빼서 함수로 만들면 좋을 것 같습니다.
+   4. initDraw
+   - const svg 와 같이 정렬 순서 등과 관련 없이 한 번만 부르면 되는 함수를 초기화하는 함수입니다.
+   5. updateDraw
+    */
 
     // process 시작할 때 작동하는 javascript 코드, (vue에서 mounted()와 같음)
     useEffect(() => {
@@ -78,6 +79,7 @@ function App() {
             //@ts-ignore
             node.count = 0;
             matrix[i] = d3.range(n).map(function (j) {
+                //map은 return문을 통해 새로운 배열을 생성하여 호출
                 return { x: j, y: i, z: 0, nodeIndex: j };
             });
         });
@@ -305,15 +307,15 @@ function App() {
                         // const cycle6Color = "#ff7b07";
                         // const cycle7Color = "#ff3d03";
                         // const cycle8Color = "#ff0000";
-                        //b,y,r v2
-                        // const cycle1Color = "#7dbbff";
-                        // const cycle2Color = "#adc5a7";
-                        // const cycle3Color = "#c4ca7a";
-                        // const cycle4Color = "#dccf4e";
-                        // const cycle5Color = "#f3d422";
-                        // const cycle6Color = "#ff9c09";
-                        // const cycle7Color = "#ff4e04";
-                        // const cycle8Color = "#ff0000";
+                        //현재 적용된 칼라
+                        // const cycle1Color = "#dc452a";
+                        // const cycle2Color = "#e79324";
+                        // const cycle3Color = "#efc62a";
+                        // const cycle4Color = "#8dc63f";
+                        // const cycle5Color = "#01aa83";
+                        // const cycle6Color = "#00b1f0";
+                        // const cycle7Color = "#056baf";
+                        // const cycle8Color = "#56346e";
                         //yellow
                         // const cycle1Color = "#ffff00";
                         // const cycle2Color = "#d9e13c";
@@ -332,25 +334,44 @@ function App() {
                         // const cycle6Color = "#3b2f8e";
                         // const cycle7Color = "#7f469b";
                         // const cycle8Color = "#000000";
-                        //rainbow2
-                        const cycle1Color = '#3288bd';
-                        const cycle2Color = '#6fa6b6';
-                        const cycle3Color = '#9cc5b3';
-                        const cycle4Color = '#cae4b4';
-                        const cycle5Color = '#ffd593';
-                        const cycle6Color = '#faa974';
-                        const cycle7Color = '#ef7c61';
-                        const cycle8Color = '#e14958';
-                        //yellow~blue
-                        // const cycle1Color = '#ffbf63';
-                        // const cycle2Color = '#e4c168';
-                        // const cycle3Color = '#c4c26d';
-                        // const cycle4Color = '#9dc374';
-                        // const cycle5Color = '#5ebaa5';
-                        // const cycle6Color = '#5aa5b5';
-                        // const cycle7Color = '#558ec6';                        ';
-                        // const cycle8Color = '#5075d8';
+                        // //방새연
+                        // const cycle1Color = "#3288bd";
+                        // const cycle2Color = "#6fa6b6";
+                        // const cycle3Color = "#9cc5b3";
+                        // const cycle4Color = "#cae4b4";
+                        // const cycle5Color = "#ffd593";
+                        // const cycle6Color = "#faa974";
+                        // const cycle7Color = "#ef7c61";
+                        // const cycle8Color = "#e14958";
+                        // //이진혁
+                        // const cycle1Color = "#ffbf63";
+                        // const cycle2Color = "#e4c168";
+                        // const cycle3Color = "#c4c26d";
+                        // const cycle4Color = "#9dc374";
+                        // const cycle5Color = "#5ebaa5";
+                        // const cycle6Color = "#5aa5b5";
+                        // const cycle7Color = "#558ec6";
+                        // const cycle8Color = "#5075d8";
+                        // //송채연
+                        // const cycle1Color = "#926591";
+                        // const cycle2Color = "#8691bd";
+                        // const cycle3Color = "#85b7db";
+                        // const cycle4Color = "#9edcd8";
+                        // const cycle5Color = "#c6dab3";
+                        // const cycle6Color = "#d7ab7c";
+                        // const cycle7Color = "#e0764c";
+                        // const cycle8Color = "#e22a20";
+                        //김소민
+                        const cycle1Color = '#d53e4f';
+                        const cycle2Color = '#f46d43';
+                        const cycle3Color = '#fdae61';
+                        const cycle4Color = '#fee08b';
+                        const cycle5Color = '#e6f598';
+                        const cycle6Color = '#abdda4';
+                        const cycle7Color = '#66c2a5';
+                        const cycle8Color = '#3288bd';
                         let color = '#000000';
+
                         switch (d) {
                             case 0:
                                 color = cycle1Color;
@@ -466,14 +487,14 @@ function App() {
         April 13, 2021
       </header> */}
             <h1>Sooyeonjang Counting Cycle</h1>
-            {/* <h2>May 11, 2021</h2> */}
+            <h2>{/* May 11, 2021 */}</h2>
 
             <aside style={{ marginTop: 0, marginRight: -200 }}>
                 <div>
                     Order:{' '}
                     <select id="order">
                         <option value="name">by Time</option>
-                        {/* <option value="group">by Frequency</option> */}
+                        <option value="group">by Frequency</option>
                         <option value="0">by Cycle1</option>
                         <option value="1">by Cycle2</option>
                         <option value="2">by Cycle3</option>
@@ -494,88 +515,57 @@ function App() {
                 </p>
 
                 {/* <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: 100}}> */}
-                {/* v1 */}
+
+                {/* const cycle1Color = "#7dbbff";
+            const cycle2Color = "#adc5a7";
+            const cycle3Color = "#c4ca7a";
+            const cycle4Color = "#dccf4e";
+            const cycle5Color = "#f3d422";
+            const cycle6Color = "#ff9c09";
+            const cycle7Color = "#ff4e04";
+            const cycle8Color = "#ff0000"; */}
+
                 <div style={{ display: 'flex' }}>
                     <svg width="13" height="13" style={{ marginLeft: 7 }}>
-                        <rect width="13" height="13" style={{ fill: '#3288bd', paddingRight: '10em' }}></rect>
+                        <rect width="13" height="13" style={{ fill: '#dc452a', paddingRight: '10em' }}></rect>
                     </svg>
                     <div>Cycle 1</div>
 
                     <svg width="13" height="13" style={{ marginLeft: 7 }}>
-                        <rect width="13" height="13" style={{ fill: '#6fa6b6', paddingRight: '10em' }}></rect>
+                        <rect width="13" height="13" style={{ fill: '#e79324', paddingRight: '10em' }}></rect>
                     </svg>
                     <div>Cycle 2</div>
 
                     <svg width="13" height="13" style={{ marginLeft: 7 }}>
-                        <rect width="13" height="13" style={{ fill: '#9cc5b3', paddingRight: '10em' }}></rect>
+                        <rect width="13" height="13" style={{ fill: '#efc62a', paddingRight: '10em' }}></rect>
                     </svg>
                     <div>Cycle 3</div>
 
                     <svg width="13" height="13" style={{ marginLeft: 7 }}>
-                        <rect width="13" height="13" style={{ fill: '#cae4b4', paddingRight: '10em' }}></rect>
+                        <rect width="13" height="13" style={{ fill: '#8dc63f', paddingRight: '10em' }}></rect>
                     </svg>
                     <div>Cycle 4</div>
                 </div>
 
                 <div>
                     <svg width="13" height="13" style={{ marginLeft: 7 }}>
-                        <rect width="13" height="13" style={{ fill: '#ffd593', paddingRight: '10em' }}></rect>
+                        <rect width="13" height="13" style={{ fill: '#01aa83', paddingRight: '10em' }}></rect>
                     </svg>
                     Cycle 5
                     <svg width="13" height="13" style={{ marginLeft: 7 }}>
-                        <rect width="13" height="13" style={{ fill: '#faa974', paddingRight: '10em' }}></rect>
+                        <rect width="13" height="13" style={{ fill: '#00b1f0', paddingRight: '10em' }}></rect>
                     </svg>
                     Cycle 6
                     <svg width="13" height="13" style={{ marginLeft: 7 }}>
-                        <rect width="13" height="13" style={{ fill: '#ef7c61', paddingRight: '10em' }}></rect>
+                        <rect width="13" height="13" style={{ fill: '#056baf', paddingRight: '10em' }}></rect>
                     </svg>
                     Cycle 7
                     <svg width="13" height="13" style={{ marginLeft: 7 }}>
-                        <rect width="13" height="13" style={{ fill: '#e14958', paddingRight: '10em' }}></rect>
+                        <rect width="13" height="13" style={{ fill: '#56346e', paddingRight: '10em' }}></rect>
                     </svg>
                     Cycle 8
                 </div>
-                {/* v2 */}
-                {/* <div style={{ display: 'flex' }}>
-                    <svg width="13" height="13" style={{ marginLeft: 7 }}>
-                        <rect width="13" height="13" style={{ fill: '#ffbf63', paddingRight: '10em' }}></rect>
-                    </svg>
-                    <div>Cycle 1</div>
 
-                    <svg width="13" height="13" style={{ marginLeft: 7 }}>
-                        <rect width="13" height="13" style={{ fill: '#e4c168', paddingRight: '10em' }}></rect>
-                    </svg>
-                    <div>Cycle 2</div>
-
-                    <svg width="13" height="13" style={{ marginLeft: 7 }}>
-                        <rect width="13" height="13" style={{ fill: '#c4c26d', paddingRight: '10em' }}></rect>
-                    </svg>
-                    <div>Cycle 3</div>
-
-                    <svg width="13" height="13" style={{ marginLeft: 7 }}>
-                        <rect width="13" height="13" style={{ fill: '#9dc374', paddingRight: '10em' }}></rect>
-                    </svg>
-                    <div>Cycle 4</div>
-                </div>
-
-                <div>
-                    <svg width="13" height="13" style={{ marginLeft: 7 }}>
-                        <rect width="13" height="13" style={{ fill: '#5ebaa5', paddingRight: '10em' }}></rect>
-                    </svg>
-                    Cycle 5
-                    <svg width="13" height="13" style={{ marginLeft: 7 }}>
-                        <rect width="13" height="13" style={{ fill: '#5aa5b5', paddingRight: '10em' }}></rect>
-                    </svg>
-                    Cycle 6
-                    <svg width="13" height="13" style={{ marginLeft: 7 }}>
-                        <rect width="13" height="13" style={{ fill: '#558ec6', paddingRight: '10em' }}></rect>
-                    </svg>
-                    Cycle 7
-                    <svg width="13" height="13" style={{ marginLeft: 7 }}>
-                        <rect width="13" height="13" style={{ fill: '#5075d8', paddingRight: '10em' }}></rect>
-                    </svg>
-                    Cycle 8
-                </div> */}
                 <div id="hi">
                     <b>Counting Cycle</b>
                 </div>
